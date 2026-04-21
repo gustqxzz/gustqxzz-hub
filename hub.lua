@@ -55,7 +55,7 @@ Drag(OpenBtn)
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 MainFrame.Position = UDim2.new(0.3, 0, 0.2, 0)
-MainFrame.Size = UDim2.new(0, 230, 0, 300)
+MainFrame.Size = UDim2.new(0, 230, 0, 320)
 MainFrame.Visible = true
 Drag(MainFrame)
 
@@ -67,15 +67,38 @@ Title.TextColor3 = Color3.fromRGB(0, 255, 200)
 
 Scroll.Parent = MainFrame
 Scroll.Position = UDim2.new(0, 5, 0, 40)
-Scroll.Size = UDim2.new(0, 220, 0, 255)
-Scroll.CanvasSize = UDim2.new(0, 0, 0, 400)
+Scroll.Size = UDim2.new(0, 220, 0, 275)
+Scroll.CanvasSize = UDim2.new(0, 0, 0, 450)
 Scroll.BackgroundTransparency = 1
 UIListLayout.Parent = Scroll
 UIListLayout.Padding = UDim.new(0, 4)
 
 OpenBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
 
--- Hyper Boost Function
+-- Anti-AFK (O que faltava)
+local afkBtn = Instance.new("TextButton", Scroll)
+afkBtn.Size = UDim2.new(0.95, 0, 0, 35)
+afkBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+afkBtn.Text = "ANTI-AFK: OFF"
+afkBtn.TextColor3 = Color3.new(1, 1, 1)
+
+local afkActive = false
+afkBtn.MouseButton1Click:Connect(function()
+    afkActive = not afkActive
+    afkBtn.Text = afkActive and "ANTI-AFK: ON" or "ANTI-AFK: OFF"
+    afkBtn.BackgroundColor3 = afkActive and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(40, 40, 40)
+end)
+
+task.spawn(function()
+    while task.wait(30) do
+        if afkActive then
+            game:GetService("VirtualUser"):CaptureController()
+            game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+        end
+    end
+end)
+
+-- Hyper Boost
 local function HyperBoost()
     if setfpscap then setfpscap(0) end
     settings().Rendering.QualityLevel = 1
@@ -98,7 +121,7 @@ local function Add(name, link)
     btn.MouseButton1Click:Connect(function() pcall(function() loadstring(game:HttpGet(link))() end) end)
 end
 
--- Botões
+-- Botão Boost
 local b = Instance.new("TextButton", Scroll)
 b.Size = UDim2.new(0.95, 0, 0, 40)
 b.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
