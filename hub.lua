@@ -8,9 +8,9 @@ local FPSLabel = Instance.new("TextLabel")
 local TS = game:GetService("TweenService")
 
 ScreenGui.Parent = game.CoreGui
-ScreenGui.Name = "BF_Manager_HYPER"
+ScreenGui.Name = "BF_Manager_ULTRA_FPS"
 
--- FPS Counter
+-- FPS Counter Premium
 FPSLabel.Parent = ScreenGui
 FPSLabel.BackgroundColor3 = Color3.new(0, 0, 0)
 FPSLabel.BackgroundTransparency = 0.7
@@ -24,7 +24,7 @@ task.spawn(function()
     while task.wait(0.5) do FPSLabel.Text = "FPS: " .. math.floor(1/RS.RenderStepped:Wait()) end
 end)
 
--- Draggable
+-- Draggable Function
 local function Drag(gui)
     local dragging, dragInput, dragStart, startPos
     gui.InputBegan:Connect(function(input)
@@ -43,7 +43,7 @@ local function Drag(gui)
     end)
 end
 
--- UI Setup
+-- UI
 OpenBtn.Parent = ScreenGui
 OpenBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 OpenBtn.Position = UDim2.new(0.02, 0, 0.4, 0)
@@ -62,20 +62,20 @@ Drag(MainFrame)
 Title.Parent = MainFrame
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Title.Text = "HYPER FPS | GUSTXQZZ"
+Title.Text = "ULTRA 1000 FPS | GUSTXQZZ"
 Title.TextColor3 = Color3.fromRGB(0, 255, 200)
 
 Scroll.Parent = MainFrame
 Scroll.Position = UDim2.new(0, 5, 0, 40)
 Scroll.Size = UDim2.new(0, 220, 0, 275)
-Scroll.CanvasSize = UDim2.new(0, 0, 0, 450)
+Scroll.CanvasSize = UDim2.new(0, 0, 0, 500)
 Scroll.BackgroundTransparency = 1
 UIListLayout.Parent = Scroll
 UIListLayout.Padding = UDim.new(0, 4)
 
 OpenBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
 
--- Anti-AFK (O que faltava)
+-- ANTI-AFK
 local afkBtn = Instance.new("TextButton", Scroll)
 afkBtn.Size = UDim2.new(0.95, 0, 0, 35)
 afkBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -98,17 +98,43 @@ task.spawn(function()
     end
 end)
 
--- Hyper Boost
-local function HyperBoost()
-    if setfpscap then setfpscap(0) end
+-- FUNÇÃO EXTREME 1000 FPS+ (COM CORES)
+local function ExtremeBoost()
+    if setfpscap then setfpscap(9999) end
+    
+    -- Limpeza de Renderização
     settings().Rendering.QualityLevel = 1
+    
+    -- Lighting Extreme (Remove Neblina e Mantém Brilho)
     local L = game:GetService("Lighting")
-    L.GlobalShadows = false; L.FogEnd = 9e20; L.Brightness = 3
+    L.GlobalShadows = false
+    L.FogEnd = 9e20
+    L.Brightness = 4 -- Brilho Intenso
+    L.ClockTime = 14 -- Sempre dia para cores melhores
+    L.OutdoorAmbient = Color3.fromRGB(200, 200, 200)
+    
+    -- Deletar Texturas e manter Plástico Liso Colorido
     for _, v in pairs(game:GetDescendants()) do
         if v:IsA("BasePart") or v:IsA("MeshPart") then
-            v.Material = Enum.Material.SmoothPlastic; v.CastShadow = false
-        elseif v:IsA("Decal") or v:IsA("Texture") then v:Destroy()
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") then v.Enabled = false end
+            v.Material = Enum.Material.SmoothPlastic
+            v.CastShadow = false
+            v.Reflectance = 0
+        elseif v:IsA("Decal") or v:IsA("Texture") or v:IsA("Sky") then
+            v:Destroy()
+        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") or v:IsA("Smoke") or v:IsA("Fire") then
+            v.Enabled = false
+        elseif v:IsA("PostProcessEffect") then
+            v.Enabled = false
+        end
+    end
+    
+    -- Otimizar Mar (Água vira bloco sólido de cor)
+    local terrain = workspace:FindFirstChildOfClass("Terrain")
+    if terrain then
+        terrain.WaterWaveSize = 0
+        terrain.WaterWaveSpeed = 0
+        terrain.WaterReflectance = 0
+        terrain.WaterTransparency = 0
     end
 end
 
@@ -121,14 +147,16 @@ local function Add(name, link)
     btn.MouseButton1Click:Connect(function() pcall(function() loadstring(game:HttpGet(link))() end) end)
 end
 
--- Botão Boost
+-- Botão Boost Máximo
 local b = Instance.new("TextButton", Scroll)
-b.Size = UDim2.new(0.95, 0, 0, 40)
-b.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
-b.Text = "🚀 HYPER FPS (MIN + CORES)"
+b.Size = UDim2.new(0.95, 0, 0, 45)
+b.BackgroundColor3 = Color3.fromRGB(255, 0, 100)
+b.Text = "🔥 EXTREME 1000 FPS+ 🔥"
 b.TextColor3 = Color3.new(1, 1, 1)
-b.MouseButton1Click:Connect(HyperBoost)
+b.MouseButton1Click:Connect(ExtremeBoost)
 
+-- Lista de Hubs
+Add("Hermano's Dev ⚡", "https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua")
 Add("Night Hub Main", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/BF-Beta.lua")
 Add("RedZ Hub", "https://raw.githubusercontent.com/huy384/redzHub/refs/heads/main/redzHub.lua")
 Add("Night Mystic", "https://raw.githubusercontent.com/Dev-NightMystic/Bloxfruits/refs/heads/main/Script.lua")
